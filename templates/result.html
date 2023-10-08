@@ -1,0 +1,18 @@
+{% extends 'layout.html' %} {% block body %}
+
+<div class="container py-2 mx-auto my-50 h-10 " style="margin: 12rem;">
+    <div class="row">
+        <div class="col-sm py-2 py-md-3">
+            <div class="card card-body text-centered">
+                {% if prediction != "Other" %}
+                <h1 class="text-center"><b>Type of Migraine: <i class="text-primary">{{ prediction }} </i></b></h1>
+                {% else %}
+                <h1 class="text-center">
+                    <b><i class="text-primary">{{ prediction }} type of headache (not migraine).</i></b>
+                </h1>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

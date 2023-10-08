@@ -1,0 +1,277 @@
+{% extends 'layout.html' %} {% block body %}
+<div class="container">
+    <div class="card col-md-8 offset-md-2 mt-4">
+        <div class="card-title heading pt-4">
+            <h1 class="text-center text-primary">Migraine Classification</h1>
+            <hr>
+        </div>
+        <div class="card-body">
+            <div class="col-md-10 offset-md-1">
+                <form action="{{url_for('predict')}}" method="POST">
+                    <div class="mb-3">
+                        <label for="age">Age</label>
+                        <input type="number" class="form-control" min="1" id="age" placeholder="25" value="" name="age"
+                            required>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="duration">Duration of Symptoms in last episode</label>
+                        <select class="form-select" name="duration" id="duration" required>
+                            <option value="">Select An Option</option>
+                            <option value="1">1 day</option>
+                            <option value="2">2 days</option>
+                            <option value="3">3 days</option>
+                        </select>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="frequency">Frequency of episodes per month</label>
+                        <input type="number" class="form-control" id="frequency" min="0" placeholder="2" value=""
+                            name="frequency" required>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="location">Location of pain</label>
+                        <select class="form-select" name="location" id="location" required>
+                            <option value="">Select An Option</option>
+                            <option value="0">None</option>
+                            <option value="1">Unilateral pain</option>
+                            <option value="2">Bilateral pain</option>
+                        </select>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="character">Character of pain</label>
+                        <select class="form-select" name="character" id="character" required>
+                            <option value="">Select An Option</option>
+                            <option value="0">None</option>
+                            <option value="1">Throbbing</option>
+                            <option value="2">Constant</option>
+                        </select>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="intensity">Intensity of pain</label>
+                        <select class="form-select" name="intensity" id="intensity" required>
+                            <option value="">Select An Option</option>
+                            <option value="0">None</option>
+                            <option value="1">Mild</option>
+                            <option value="2">Medium</option>
+                            <option value="2">Severe</option>
+                        </select>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="visual">Number of reversible visual symptoms</label>
+                        <input type="number" min="0" class="form-control" id="visual" placeholder="2" value=""
+                            name="visual" required>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="sensory">Number of reversible sensory symptoms</label>
+                        <input type="number" min="0" class="form-control" id="sensory" placeholder="1" value=""
+                            name="sensory" required>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="nausea">Nausea</label>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="nausea" id="nno" value="0" required>
+                            <label for="nno" class="form-check-label">No</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="nausea" id="nyes" value="1" required>
+                            <label for="nyes" class="form-check-label">Yes</label>
+                        </div>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="vomit">Vomit</label>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="vomit" id="vno" value="0" required>
+                            <label for="vno" class="form-check-label">No</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="vomit" id="vyes" value="1" required>
+                            <label for="vyes" class="form-check-label">Yes</label>
+                        </div>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="phonophobia">Phonophobia (Noise Sensitivity)</label>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="phonophobia" id="phono" value="0"
+                                required>
+                            <label for="phono" class="form-check-label">No</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" name="phonophobia" class="form-check-input" id="phoyes" value="1"
+                                required>
+                            <label class="form-check-label" for="phoyes">Yes</label>
+                        </div>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="photophobia">Photophobia (Light Sensitivity)</label>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="photophobia" id="phtno" value="0"
+                                required>
+                            <label for="phtno" class="form-check-label">No</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" name="photophobia" id="phtyes" class="form-check-input" value="1"
+                                required>
+                            <label for="phtyes" class="form-check-label">Yes</label>
+                        </div>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="dysphasia">Dysphasia (Lack of speech coordination)</label>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" name="dysphasia" class="form-check-input" id="dno" value="0" required>
+                            <label for="dno" class="form-check-label">No</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" name="dysphasia" class="form-check-input" id="dyes" value="1" required>
+                            <label for="dyes" class="form-check-label">Yes</label>
+                        </div>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="dysarthria">Dysarthria (Disarticulated sounds and words)</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="dysarthria" id="dyno" value="0" required>
+                            <label class="form-check-label" for="dyno">No</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="dysarthria" id="dyyes" value="1"
+                                required>
+                            <label for="dyyes" class="form-check-label">Yes</label>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="vertigo">Vertigo (Dizziness)</label>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="vertigo" id="vrno" value="0" required>
+                            <label for="vrno" class="form-check-label">No</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="vertigo" id="vryes" value="1" required>
+                            <label for="vryes" class="form-check-label">Yes</label>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tinnitus">Tinnitus (Ringing in the ears)</label>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="tinnitus" id="tno" value="0" required>
+                            <label for="tno" class="form-check-label">No</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="tinnitus" id="tyes" value="1" required>
+                            <label for="tyes" class="form-check-label">Yes</label>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="hypoacusis">Hypoacusis (Hearing loss)</label>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="hypoacusis" id="hno" value="0" required>
+                            <label for="hno" class="form-check-label">No</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="hypoacusis" id="hyes" value="1" required>
+                            <label for="hyes" class="form-check-label">Yes</label>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="diplopia">Diplopia (Double vision)</label>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="diplopia" id="dino" value="0" required>
+                            <label for="dino" class="form-check-label">No</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="diplopia" id="diyes" value="1" required>
+                            <label for="diyes" class="form-check-label">Yes</label>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="visualDefect">Visual Defect</label>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="visualDefect" id="vdno" value="0"
+                                required>
+                            <label for="vdno" class="form-check-label">No</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="visualDefect" id="vdyes" value="1"
+                                required>
+                            <label for="vdyes" class="form-check-label">Yes</label>
+                        </div>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="ataxia">Ataxia (Lack of muscle control)</label>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="ataxia" id="ano" value="0" required>
+                            <label for="ano" class="form-check-label">No</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="ataxia" id="ayes" value="1" required>
+                            <label for="ayes" class="form-check-label">Yes</label>
+                        </div>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="conscience">Conscience (Jeopardized conscience)</label>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="conscience" id="cno" value="0" required>
+                            <label for="cno" class="form-check-label">No</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="conscience" id="cyes" value="1" required>
+                            <label for="cyes" class="form-check-label">Yes</label>
+                        </div>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="paresthesia">Paresthesia (Simultaneous bilateral paresthesia)</label>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="paresthesia" id="pno" value="0" required>
+                            <label for="pno" class="form-check-label">No</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="paresthesia" id="pyes" value="1"
+                                required>
+                            <label for="pyes" class="form-check-label">Yes</label>
+                        </div>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="dpf">Family history</label>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="dpf" id="dpfno" value="0" required>
+                            <label for="dpfno" class="form-check-label">No</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="dpf" id="dpfyes" value="1" required>
+                            <label for="dpfyes" class="form-check-label">Yes</label>
+                        </div>
+
+                    </div>
+                    <div class="d-flex justify-content-center mb-4 mt-6">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
